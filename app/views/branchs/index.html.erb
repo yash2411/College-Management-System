@@ -1,0 +1,33 @@
+<div class="container">
+  <h1 class="text-center">Students with branch <%= @branch.branch %></h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Email</th>
+        <th scope="col">CGPA</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Branch</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% counter =0 %>
+  <% @students.each do |student| %>
+      <tr>
+        <th scope="row"><%= counter +1 %></th>
+        <td><%= student.name %></td>
+        <td><%= student.city %></td>
+        <td><%= student.email %></td>
+        <td><%= student.cgpa %></td>
+        <td><%= link_to student.grade.grade, grades_path(g_id: student.grade_id) %></td>
+        <td><%= student.branch.branch %></td>
+      <% counter+=1 %>
+      </tr>
+  <% end %> 
+    </tbody>
+  </table>
+
+  <%= link_to "Home Page", root_path %>
+</div>

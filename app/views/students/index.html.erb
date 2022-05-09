@@ -1,0 +1,92 @@
+<h1 class="text-center mb-3">College Management System</h1>
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Email</th>
+        <th scope="col">CGPA</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Branch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% counter =0 %>
+  <% @students.each do |student| %>
+      <tr class="stud-delete<%= student.id %>">
+        <th scope="row"><%= counter+1 %></th>
+        <td><%= student.name %></td>
+        <td><%= student.city %></td>
+        <td><%= student.email %></td>
+        <td><%= student.cgpa %></td>
+        <td><%= link_to student.grade.grade, grades_path(g_id: student.grade_id) %></td>
+        <td><%= link_to student.branch.branch, branchs_path(b_id: student.branch_id) %></td>
+        <td><%= link_to "Destroy", student_path(student), method: :delete, remote: true %></td>
+        <% counter+=1 %>
+      </tr>
+  <% end %> 
+    </tbody>
+  </table>
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newStudent">
+      Create New Student
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="newStudent" tabindex="-1" aria-labelledby="newStudentLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newStudentLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= form_for(@student, remote: true) do |f| %>
+  
+            <%= f.label :name, "Name" %>
+            <br>
+            <%= f.text_field :name %>
+            <br>
+            <br>
+  
+            <%= f.label :email, "Email" %>
+            <br>
+            <%= f.email_field :email %>
+            <br>
+            <br>
+  
+  
+            <%= f.label :city, "City" %>
+            <br>
+            <%= f.text_field :city %>
+            <br>
+            <br>
+  
+            <%= f.label :branch_id, "Branch: " %>          
+            <%= f.collection_select :branch_id, Branch.all, :id, :branch %>
+            <br>
+            <br>
+            
+            <%= f.label :cgpa, "GGPA" %>
+            <br>
+            <%= f.number_field :cgpa,step: 0.05 %>
+            <br>
+            <br>
+  
+            <%= f.label :grade_id, "Grade: " %>
+            <%= f.collection_select :grade_id, Grade.all, :id, :grade %>
+            <br>
+            <br>
+  
+            <%= f.submit "Save Student" %>
+  
+            <% end %>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
